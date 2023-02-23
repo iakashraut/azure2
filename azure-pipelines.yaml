@@ -1,0 +1,21 @@
+trigger: 
+  - develop
+pool:
+  vmImage: 'windows-latest'
+steps:
+  - task: NuGetToolInstaller@0
+
+  - task: NuGetRestore@1
+    inputs:
+      restoreSolution: '**/*.sln'
+
+  - task: VSBuild@1
+    inputs:
+      solution: '**/*.sln'
+      msbuildArgs: 
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(buildartifactstagingdirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'container'    
